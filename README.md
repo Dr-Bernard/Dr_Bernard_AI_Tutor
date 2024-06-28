@@ -6,7 +6,7 @@ Llama3
 Python v3.9.13
 Setup Instructions
 Update .env file
-Update the .env file with your GROQ_API_KEY
+Update the .env file with your GROQ_API_KEY (remove the GROQ_API_KEY when pushing your codes to online repositories)
 
 Setup a virtual environment
 python3 -m venv env

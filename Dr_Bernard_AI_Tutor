@@ -10,7 +10,7 @@ from groq import Groq
 
 from dotenv import load_dotenv
 
-# Loading the environment variables using load_dotenv() which is a Python function that loads environment variables from a `.env`
+# Loading the environment variables using load_dotenv() which is a Python function that loads environment variables from a `.env` file.
 
 load_dotenv()
 
@@ -46,5 +46,6 @@ while True:
         ],
         model="llama3-8b-8192",
     )
+
 
     print("Chatbot: " + chat_completion.choices[0].message.content)
