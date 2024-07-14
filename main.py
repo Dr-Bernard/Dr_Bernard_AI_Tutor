@@ -2,12 +2,13 @@ import os
 import requests
 from groq import Groq
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
 
-client = Groq(
-    api_key=os.environ.get("GROQ_API_KEY"),
-)
+st.title('🦜🔗 Quickstart App')
+
+client = Groq(api_key=os.environ.get("GROQ_API_KEY"))
 
 class ChatAgent:
     def __init__(self, api_key, model_name, verbose=False):
@@ -65,19 +66,22 @@ class ChatAgent:
 
         return response
 
-    def run(self):
-        print("Start chatting with the chatbot (type 'quit' to exit):")
-        while True:
-            user_input = input("User: ")
-            if user_input.lower() == "quit":
-                break
-            response = self.get_response(user_input)
-            print("Chatbot: " + response)
+def generate_response(user_input):
+    return agent.get_response(user_input)
 
 # Set up the agent with your Groq API key and LLaMA model name
 api_key = os.environ.get("GROQ_API_KEY")
 model_name = "llama3-8b-8192"
 agent = ChatAgent(api_key, model_name, verbose=True)
 
-# Start the chat session
-agent.run()
+st.text_input("Type your message here:")
+
+with st.form('my_form'):
+    text = st.text_area('Enter text:', 'What are the three key pieces of advice for learning how to code?')
+    submitted = st.form_submit_button('Submit')
+    if not api_key:
+        st.warning('Please enter your Groq API key in the .env file!', icon='⚠')
+    if submitted and api_key:
+        response = generate_response(text)
+        st.write(response)
+
